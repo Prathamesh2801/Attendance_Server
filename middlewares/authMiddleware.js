@@ -17,6 +17,10 @@ export default async function protect(req, res, next) {
       [decoded.id]
     );
     const user = rows[0];
+
+    console.log("Decoded token:", decoded);
+    console.log("Fetched user from DB:", user);
+
     if (!user)
       return res
         .status(401)

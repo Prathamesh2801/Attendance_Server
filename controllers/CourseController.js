@@ -1,65 +1,36 @@
-import { db } from "../config/db.js";
-
+// controllers/courseController.js
+import sendResponse from "../utils/sendResponse.js";
+import {
+  findPersuingSubjects,
+  findCompletedSubjects,
+  findPendingSubjects,
+} from "../models/courseModel.js";
 
 export const getCourseDetails = async (req, res) => {
   try {
-    const url = new URL(req.url, `http://${req.headers.host}`);
-    const name_contactid = url.searchParams.get("name_contactid");
-    const course = url.searchParams.get("course");
+    // we trust the authenticated user's contact/id from middleware
+    const studentId = req.user?.id;
+    const course = (req.query.course || "").trim();
 
-    if (!name_contactid || !course) {
-      res.writeHead(400, { "Content-Type": "application/json" });
-      return res.end(
-        JSON.stringify({
-          success: false,
-          message: "Missing name_contactid or course",
-        })
-      );
+    if (!studentId || !course) {
+      return sendResponse(res, 400, { success: false, message: "Missing course or authenticated user" });
     }
 
-    console.log("🔍 Fetching course details for:", { name_contactid, course });
+    // Fetch lists
+    const persuing = await findPersuingSubjects(studentId, course);
+    const completed = await findCompletedSubjects(studentId, course);
+    const pending = await findPendingSubjects(studentId, course);
 
-    // ✅ Persuing subjects
-    const [persuing] = await db.query(
-      "SELECT subject FROM faculty_student WHERE nameid = ? AND course = ? AND status = 'Persuing'",
-      [name_contactid, course]
-    );
-
-    // ✅ Completed subjects
-    const [completed] = await db.query(
-      "SELECT subject FROM faculty_student WHERE nameid = ? AND course = ? AND status = 'Completed'",
-      [name_contactid, course]
-    );
-
-    // ✅ Pending subjects (not in completed or persuing)
-    const [pending] = await db.query(
-      `SELECT s.subjectname AS subjectname
-       FROM subject s
-       WHERE s.coursename = ?
-         AND s.subjectname COLLATE utf8mb4_general_ci NOT IN (
-           SELECT subject COLLATE utf8mb4_general_ci
-           FROM faculty_student
-           WHERE nameid = ?
-             AND course = ?
-             AND status IN ('Completed', 'Persuing')
-         )`,
-      [course, name_contactid, course]
-    );
-
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(
-      JSON.stringify({
-        success: true,
-        data: {
-          persuingSubjects: persuing,
-          completedSubjects: completed,
-          pendingSubjects: pending,
-        },
-      })
-    );
+    return sendResponse(res, 200, {
+      success: true,
+      data: {
+        persuingSubjects: persuing,
+        completedSubjects: completed,
+        pendingSubjects: pending,
+      },
+    });
   } catch (err) {
-    console.error("❌ Course details error:", err);
-    res.writeHead(500, { "Content-Type": "application/json" });
-    res.end(JSON.stringify({ success: false, message: err.message }));
+    console.error("Course details error:", err);
+    return sendResponse(res, 500, { success: false, message: err.message || "Server error" });
   }
 };

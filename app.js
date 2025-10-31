@@ -12,6 +12,8 @@ import "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import attendanceRoutes from "./routes/attendanceRoutes.js";
 import batchRoutes from "./routes/batchRoutes.js";
+import courseRoutes from "./routes/courseRoutes.js";
+import feeRoutes from "./routes/feeRoutes.js";
 
 const app = express();
 
@@ -30,6 +32,11 @@ app.use("/api/auth", authRoutes); // POST /api/auth/login
 app.use("/api/attendance", attendanceRoutes); // GET
 
 app.use("/api/batch", batchRoutes); // GET /api/batch?course=...
+
+app.use("/api/course", courseRoutes); // GET
+
+app.use("/api/fee", feeRoutes); // GET /api/fee?name=...
+
 
 // health check
 app.get("/api/health", (req, res) => {
