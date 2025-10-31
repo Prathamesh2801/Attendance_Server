@@ -1,4 +1,5 @@
-import { db } from "../utils/utils.js";
+import { db } from "../config/db.js";
+
 
 export const getCourseDetails = async (req, res) => {
   try {

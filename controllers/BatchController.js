@@ -1,70 +1,35 @@
-import { db } from "../utils/utils.js";
+// controllers/batchController.js
+import sendResponse from "../utils/sendResponse.js";
+import {
+  findFacultyStudentByStatus,
+  findPendingSubjects,
+} from "../models/batchModel.js";
 
 export const getBatchDetails = async (req, res) => {
   try {
-    const url = new URL(req.url, `http://${req.headers.host}`);
-    const id = url.searchParams.get("id");
-    const course = url.searchParams.get("course");
+    // We trust JWT-authenticated user id instead of client-sent id
+    const studentId = req.user?.id;
+    const course = req.query.course;
 
-    console.log("🔍 Batch details request:", { id, course });
-
-    if (!id || !course) {
-      return sendJSON(res, 400, {
-        success: false,
-        message: "Missing id or course",
-      });
+    if (!studentId || !course) {
+      return sendResponse(res, 400, { success: false, message: "Missing required data: course (and authenticated user)" });
     }
 
-    // Fix collation issues by specifying consistent collation
-    const [persuing] = await db.query(
-      "SELECT * FROM faculty_student WHERE (nameid = ? OR studentid = ?) AND course = ? AND status = 'Persuing'",
-      [id, id, course]
-    );
+    // fetch data
+    const persuing = await findFacultyStudentByStatus(studentId, course, "Persuing");
+    const completed = await findFacultyStudentByStatus(studentId, course, "Completed");
+    const pending = await findPendingSubjects(studentId, course);
 
-    const [completed] = await db.query(
-      "SELECT * FROM faculty_student WHERE (nameid = ? OR studentid = ?) AND course = ? AND status = 'Completed'",
-      [id, id, course]
-    );
-
-    // Fixed query with consistent collation
-    const [pending] = await db.query(
-      `SELECT s.subjectname 
-       FROM subject s 
-       WHERE s.coursename = ? 
-         AND s.subjectname COLLATE utf8mb4_unicode_ci NOT IN (
-           SELECT fs.subject COLLATE utf8mb4_unicode_ci
-           FROM faculty_student fs 
-           WHERE (fs.nameid = ? OR fs.studentid = ?) 
-             AND fs.course = ? 
-             AND fs.status IN ('Completed', 'Persuing')
-         )`,
-      [course, id, id, course]
-    );
-
-    console.log("✅ Batch query results:", {
-      persuing: persuing.length,
-      completed: completed.length,
-      pending: pending.length,
-    });
-
-    return sendJSON(res, 200, {
+    return sendResponse(res, 200, {
       success: true,
       data: {
-        persuing: persuing,
-        completed: completed,
-        pending: pending,
+        persuing,
+        completed,
+        pending,
       },
     });
   } catch (err) {
-    console.error("❌ Batch details error:", err);
-    return sendJSON(res, 500, {
-      success: false,
-      message: "Database error: " + err.message,
-    });
+    console.error("Batch details error:", err);
+    return sendResponse(res, 500, { success: false, message: "Database error: " + (err.message || "") });
   }
 };
-
-function sendJSON(res, statusCode, data) {
-  res.writeHead(statusCode, { "Content-Type": "application/json" });
-  res.end(JSON.stringify(data));
-}

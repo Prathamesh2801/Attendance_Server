@@ -1,32 +1,34 @@
-import { db } from "../utils/utils.js";
+// controllers/attendanceController.js
+import sendResponse from "../utils/sendResponse.js";
+import { findAttendanceByUser } from "../models/attendanceModel.js";
 
 export const getAttendanceDetails = async (req, res) => {
   try {
-    const url = new URL(req.url, `http://${req.headers.host}`);
-    const name_contactid = url.searchParams.get("name_contactid");
-    const course = url.searchParams.get("course");
-    const batch = url.searchParams.get("batch");
-
+    const { name_contactid, course, batch } = req.query;
     if (!name_contactid || !course || !batch) {
-      return sendJSON(res, 400, {
+      return sendResponse(res, 400, {
         success: false,
         message: "Missing parameters",
       });
     }
+    console.log("Data : ", { name_contactid, course, batch });
+    // Authorization: only allow a user to fetch their own attendance
+    console.log("Match Data : ",req.user)
 
-    const [rows] = await db.query(
-      "SELECT date, name, attendence,topic, Reasonfor_absent FROM attendence WHERE name = ? AND course = ? AND batchno = ? ORDER BY date ASC",
-      [name_contactid, course, batch]
-    );
+    if (String(req.user.name_contactid) !== String(name_contactid)) {
+      return sendResponse(res, 403, {
+        success: false,
+        message: "Unauthorized to view attendance",
+      });
+    }
 
-    return sendJSON(res, 200, { success: true, data: rows });
+    const rows = await findAttendanceByUser({ name_contactid, course, batch });
+    return sendResponse(res, 200, { success: true, data: rows });
   } catch (err) {
-    console.error(err);
-    return sendJSON(res, 500, { success: false, message: err.message });
+    console.error("Attendance error:", err);
+    return sendResponse(res, 500, {
+      success: false,
+      message: err.message || "Server error",
+    });
   }
 };
-
-function sendJSON(res, statusCode, data) {
-  res.writeHead(statusCode, { "Content-Type": "application/json" });
-  res.end(JSON.stringify(data));
-}
