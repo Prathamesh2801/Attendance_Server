@@ -26,7 +26,7 @@ export default async function protect(req, res, next) {
         .status(401)
         .json({ success: false, message: "Invalid token user" });
 
-    req.user = user; // { id, name, contact }
+    req.user = user; // { id, name, contact,name_contactid }
     return next();
   } catch (err) {
     console.error("Auth error:", err && err.message);

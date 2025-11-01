@@ -21,7 +21,7 @@ export const getFeeDetails = async (req, res) => {
         Paid as Paid,
         Balance as Balance,
         Dates as Dates
-      FROM payement   
+      FROM payement     
       WHERE 1=1
     `;
 
