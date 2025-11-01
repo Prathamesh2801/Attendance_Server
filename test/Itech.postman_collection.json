@@ -1,0 +1,466 @@
+{
+	"info": {
+		"_postman_id": "cf375e75-878f-4960-85f8-3a1c392e7093",
+		"name": "Itech",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34618315"
+	},
+	"item": [
+		{
+			"name": "Tested Cases",
+			"item": [
+				{
+					"name": "Fees  details",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://studentinfoapp.i-tech.net.in/api/feedetails?name=RUTURAJ+SANTOSH+KHAR+9076190186&contactID=9076190186",
+							"protocol": "https",
+							"host": [
+								"studentinfoapp",
+								"i-tech",
+								"net",
+								"in"
+							],
+							"path": [
+								"api",
+								"feedetails"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "RUTURAJ+SANTOSH+KHAR+9076190186"
+								},
+								{
+									"key": "contactID",
+									"value": "9076190186"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fees  details T2",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://studentinfoapp.i-tech.net.in/api/feedetails?name=JARAVANDI+PALLAVI+BA+9307387334&contactID=9307387334",
+							"protocol": "https",
+							"host": [
+								"studentinfoapp",
+								"i-tech",
+								"net",
+								"in"
+							],
+							"path": [
+								"api",
+								"feedetails"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "JARAVANDI+PALLAVI+BA+9307387334"
+								},
+								{
+									"key": "contactID",
+									"value": "9307387334"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Server Attendance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://studentinfoapp.i-tech.net.in/api/attendance/details?name_contactid=BENDRA%20AAKANSHA%201111111180&course=4%20MODULE&batch=I-TECH%20NALLASOPARA-EAST%20MS%20POWER%20POINT%20AND%20ACCESS-%20BATCH%20NO%2056",
+							"protocol": "https",
+							"host": [
+								"studentinfoapp",
+								"i-tech",
+								"net",
+								"in"
+							],
+							"path": [
+								"api",
+								"attendance",
+								"details"
+							],
+							"query": [
+								{
+									"key": "name_contactid",
+									"value": "BENDRA%20AAKANSHA%201111111180"
+								},
+								{
+									"key": "course",
+									"value": "4%20MODULE"
+								},
+								{
+									"key": "batch",
+									"value": "I-TECH%20NALLASOPARA-EAST%20MS%20POWER%20POINT%20AND%20ACCESS-%20BATCH%20NO%2056"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Server Change 2.0 ( JWT )",
+			"item": [
+				{
+					"name": "Login 2.0 PARTH TAMBE",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"contact\": \"9209926279\",\r\n  \"password\": \"PARTHTAMBE_19779\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login 2.0 BENDRA AAKANSHA",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"contact\": \"1111111180\",\r\n  \"password\": \"BENDRAAAKANSHA_68503\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test the API Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/health",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"health"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Fee Details PARTH TAMBE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token_Parth_Tambe}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/fee",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"fee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Fee Details  BENDRA AAKANSHA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token_BENDRAAAKANSHA}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/fee",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"fee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch the Attendance PARTH TAMBE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token_Parth_Tambe}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/attendance?name_contactid=PARTH TAMBE 9209926279&course=ICSE&batch=I-TECH NALLASOPARA-WEST JAVASCRIPT- Batch no 26",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"attendance"
+							],
+							"query": [
+								{
+									"key": "name_contactid",
+									"value": "PARTH TAMBE 9209926279"
+								},
+								{
+									"key": "course",
+									"value": "ICSE"
+								},
+								{
+									"key": "batch",
+									"value": "I-TECH NALLASOPARA-WEST JAVASCRIPT- Batch no 26"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch the Attendance BENDRA AAKANSHA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token_BENDRAAAKANSHA}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/attendance?name_contactid=BENDRA AAKANSHA 1111111180&course=4 MODULE&batch=I-TECH NALLASOPARA-EAST Ms Excel- Batch no 74",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"attendance"
+							],
+							"query": [
+								{
+									"key": "name_contactid",
+									"value": "BENDRA AAKANSHA 1111111180"
+								},
+								{
+									"key": "course",
+									"value": "4 MODULE"
+								},
+								{
+									"key": "batch",
+									"value": "I-TECH NALLASOPARA-EAST Ms Excel- Batch no 74"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch the Batch BENDRA AAKANSHA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token_BENDRAAAKANSHA}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/batch?course=4 MODULE",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"batch"
+							],
+							"query": [
+								{
+									"key": "course",
+									"value": "4 MODULE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch the Batch PARTH TAMBE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token_Parth_Tambe}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/batch?course=4 MODULE",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"batch"
+							],
+							"query": [
+								{
+									"key": "course",
+									"value": "4 MODULE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch the Course PARTH TAMBE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token_Parth_Tambe}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/course?course=ICSE",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"course"
+							],
+							"query": [
+								{
+									"key": "course",
+									"value": "ICSE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch the Course BENDRA AAKANSHA",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{Token_BENDRAAAKANSHA}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/course?course=4 MODULE",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"course"
+							],
+							"query": [
+								{
+									"key": "course",
+									"value": "4 MODULE"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
