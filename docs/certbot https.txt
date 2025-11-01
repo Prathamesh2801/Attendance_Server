@@ -1,0 +1,102 @@
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-85-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon Oct 13 06:59:30 UTC 2025
+
+  System load:  0.01              Processes:             107
+  Usage of /:   5.9% of 47.39GB   Users logged in:       0
+  Memory usage: 6%                IPv4 address for eth0: 82.29.165.238
+  Swap usage:   0%                IPv6 address for eth0: 2a02:4780:12:be9c::1
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+25 updates can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+1 updates could not be installed automatically. For more details,
+see /var/log/unattended-upgrades/unattended-upgrades.log
+
+Last login: Mon Oct 13 06:31:40 2025 from 169.254.0.1
+root@srv807475:~# sudo pm2 status
+┌────┬────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name       │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0  │ backend    │ default     │ N/A     │ fork    │ 903      │ 4m     │ 0    │ online    │ 0%       │ 64.9mb   │ root     │ disabled │
+└────┴────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+root@srv807475:~# ls
+Attendance_Server
+root@srv807475:~# cd /etc/apache2/sites-available/
+root@srv807475:/etc/apache2/sites-available# ls
+000-default-le-ssl.conf  000-default.conf  default-ssl.conf
+root@srv807475:/etc/apache2/sites-available# ls
+000-default-le-ssl.conf  000-default.conf  default-ssl.conf
+root@srv807475:/etc/apache2/sites-available# sudo nano studentinfoapp.i-tech.net.in.conf
+root@srv807475:/etc/apache2/sites-available# sudo a2ensite studentinfoapp.i-tech.net.in.conf 
+Enabling site studentinfoapp.i-tech.net.in.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+root@srv807475:/etc/apache2/sites-available# sudo systemctl reload apache2
+root@srv807475:/etc/apache2/sites-available# sudo a2dissite 000-default.conf
+Site 000-default disabled.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+root@srv807475:/etc/apache2/sites-available# sudo systemctl reload apache2
+root@srv807475:/etc/apache2/sites-available# # from your project directory (or anywhere)
+curl -v http://127.0.0.1:5000/api/test
+*   Trying 127.0.0.1:5000...
+* Connected to 127.0.0.1 (127.0.0.1) port 5000
+> GET /api/test HTTP/1.1
+> Host: 127.0.0.1:5000
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE
+< Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json
+< Date: Mon, 13 Oct 2025 07:12:57 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< Transfer-Encoding: chunked
+< 
+* Connection #0 to host 127.0.0.1 left intact
+{"success":true,"message":"Server OK","database":2}root@srv807475:/etc/apache2/sites-available# curl -v http://127.0.0.1:5000/api/test
+*   Trying 127.0.0.1:5000...
+* Connected to 127.0.0.1 (127.0.0.1) port 5000
+> GET /api/test HTTP/1.1
+> Host: 127.0.0.1:5000
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Access-Control-Allow-Origin: *
+< Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE
+< Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With
+< Access-Control-Allow-Credentials: true
+< Content-Type: application/json
+< Date: Mon, 13 Oct 2025 07:13:07 GMT
+< Connection: keep-alive
+< Keep-Alive: timeout=5
+< Transfer-Encoding: chunked
+< 
+* Connection #0 to host 127.0.0.1 left intact
+{"success":true,"message":"Server OK","databasudo nano /etc/apache2/sites-available/000-default-le-ssl.confetc/apache2/sites-available/000-default-le-ssl.conf
+root@srv807475:/etc/apache2/sites-available# sudo apachectl configtest
+Syntax OK
+root@srv807475:/etc/apache2/sites-available# sudo systemctl reload apache2
+root@srv807475:/etc/apache2/sites-available# ^C
+root@srv807475:/etc/apache2/sites-available# 

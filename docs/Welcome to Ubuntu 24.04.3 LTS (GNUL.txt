@@ -1,0 +1,515 @@
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-85-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Thu Oct  9 08:28:52 UTC 2025
+
+  System load:  0.37              Processes:             100
+  Usage of /:   6.5% of 47.39GB   Users logged in:       0
+  Memory usage: 5%                IPv4 address for eth0: 82.29.165.238
+  Swap usage:   0%                IPv6 address for eth0: 2a02:4780:12:be9c::1
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+1 updates could not be installed automatically. For more details,
+see /var/log/unattended-upgrades/unattended-upgrades.log
+
+Last login: Thu Oct  9 08:25:40 2025 from 169.254.0.1
+root@srv807475:~# pm start
+Command 'pm' not found, but can be installed with:
+apt install powerman
+root@srv807475:~# pm2 start
+[PM2] Spawning PM2 daemon with pm2_home=/root/.pm2
+[PM2] PM2 Successfully daemonized
+[PM2][ERROR] File ecosystem.config.js not found
+root@srv807475:~# ls
+Attendance_Server
+root@srv807475:~# cd Attendance_Server/
+root@srv807475:~/Attendance_Server# ls
+controllers  node_modules  package-lock.json  package.json  server.js  utils
+root@srv807475:~/Attendance_Server# pm2 start npm --name backend -- start
+[PM2] Starting /usr/bin/npm in fork_mode (1 instance)
+[PM2] Done.
+┌────┬────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id │ name       │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├────┼────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0  │ backend    │ default     │ N/A     │ fork    │ 1014     │ 0s     │ 0    │ online    │ 0%       │ 25.8mb   │ root     │ disabled │
+└────┴────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+root@srv807475:~/Attendance_Server# pm2 save
+[PM2] Saving current process list...
+[PM2] Successfully saved in /root/.pm2/dump.pm2
+root@srv807475:~/Attendance_Server# sudo a2enmod proxy proxy_http rewrite headers
+sudo: a2enmod: command not found
+root@srv807475:~/Attendance_Server# cd ..
+root@srv807475:~# # 1. Check if Apache is installed at all
+apache2 -v
+
+# 2. Check if Nginx is installed
+nginx -v
+Command 'apache2' not found, but can be installed with:
+apt install apache2-bin
+Command 'nginx' not found, but can be installed with:
+apt install nginx
+root@srv807475:~# sudo apt install apache2 -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  gyp handlebars javascript-common libcares2 libdrm-amdgpu1 libdrm-intel1 libegl-mesa0 libegl1 libfile-basedir-perl libfile-desktopentry-perl libfile-mimeinfo-perl
+  libgbm1 libgl1 libgl1-mesa-dri libgles2 libglvnd0 libglx-mesa0 libglx0 libice6 libio-stringy-perl libipc-system-simple-perl libjs-async libjs-events libjs-inherits
+  libjs-is-typedarray libjs-prettify libjs-regenerate libjs-source-map libjs-sprintf-js libjs-typedarray-to-buffer libllvm20 libnet-dbus-perl libpciaccess0 libre2-10
+  libsm6 libssl-dev libtie-ixhash-perl libuv1-dev libvulkan1 libwayland-client0 libwayland-server0 libx11-protocol-perl libx11-xcb1 libxaw7 libxcb-dri3-0 libxcb-glx0
+  libxcb-present0 libxcb-randr0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libxcomposite1 libxcursor1 libxfixes3 libxft2 libxi6 libxinerama1 libxkbfile1
+  libxml-parser-perl libxml-twig-perl libxml-xpathengine-perl libxmu6 libxrandr2 libxrender1 libxshmfence1 libxt6t64 libxtst6 libxv1 libxxf86dga1 libxxf86vm1
+  mesa-libgallium mesa-vulkan-drivers node-abbrev node-ampproject-remapping node-ansi-escapes node-ansi-regex node-ansi-styles node-aproba node-are-we-there-yet
+  node-argparse node-arrify node-async node-async-each node-auto-bind node-babel-plugin-add-module-exports node-babel7-runtime node-balanced-match node-base64-js
+  node-binary-extensions node-brace-expansion node-busboy node-camelcase node-caniuse-lite node-chownr node-chrome-trace-event node-ci-info node-cjs-module-lexer
+  node-cli-boxes node-cli-cursor node-clone node-clone-deep node-collection-visit node-color-convert node-color-name node-colors node-commander node-commondir
+  node-concat-stream node-console-control-strings node-convert-source-map node-core-js node-core-js-pure node-core-util-is node-data-uri-to-buffer
+  node-decompress-response node-deep-is node-defaults node-define-property node-delegates node-depd node-diff node-electron-to-chromium node-encoding node-end-of-stream
+  node-err-code node-error-ex node-es-module-lexer node-escape-string-regexp node-eslint-utils node-eslint-visitor-keys node-esquery node-estraverse node-esutils
+  node-events node-fancy-log node-fast-deep-equal node-fast-levenshtein node-fetch node-find-up node-flatted node-for-in node-for-own node-foreground-child
+  node-fs-readdir-recursive node-fs-write-stream-atomic node-fs.realpath node-function-bind node-functional-red-black-tree node-get-caller-file node-get-stream
+  node-get-value node-glob node-globals node-got node-graceful-fs node-growl node-has-flag node-has-unicode node-has-value node-has-values node-hosted-git-info
+  node-iconv-lite node-ieee754 node-iferr node-imurmurhash node-indent-string node-inflight node-inherits node-ini node-interpret node-ip node-ip-regex node-is-arrayish
+  node-is-binary-path node-is-buffer node-is-descriptor node-is-extendable node-is-extglob node-is-path-cwd node-is-plain-obj node-is-plain-object node-is-stream
+  node-is-typedarray node-is-windows node-isarray node-isexe node-isobject node-js-tokens node-jsesc node-json-buffer node-json-parse-better-errors node-json-schema
+  node-json-schema-traverse node-json-stable-stringify node-jsonify node-jsonparse node-kind-of node-levn node-loader-runner node-locate-path node-lodash-packages
+  node-log-driver node-lowercase-keys node-lru-cache node-map-visit node-memfs node-merge-stream node-mimic-response node-minimatch node-minimist node-minipass
+  node-mixin-deep node-mute-stream node-n3 node-negotiator node-neo-async node-npm-run-path node-object-inspect node-object-visit node-once node-optimist node-optionator
+  node-osenv node-p-cancelable node-p-limit node-p-locate node-p-map node-pascalcase node-path-dirname node-path-exists node-path-is-absolute node-path-is-inside
+  node-path-type node-pify node-pkg-dir node-postcss-value-parser node-prelude-ls node-process-nextick-args node-promise-inflight node-promise-retry node-promzard
+  node-prr node-pump node-punycode node-quick-lru node-randombytes node-read node-readable-stream node-rechoir node-regenerate node-regenerate-unicode-properties
+  node-regenerator-runtime node-regenerator-transform node-regexpp node-regjsgen node-repeat-string node-require-directory node-require-from-string node-resolve
+  node-resolve-cwd node-resolve-from node-restore-cursor node-resumer node-retry node-run-queue node-safe-buffer node-sellside-emitter node-serialize-javascript
+  node-set-blocking node-set-immediate-shim node-shebang-command node-shebang-regex node-shell-quote node-signal-exit node-slash node-slice-ansi node-source-list-map
+  node-source-map node-source-map-support node-spdx-correct node-spdx-exceptions node-spdx-expression-parse node-spdx-license-ids node-sprintf-js node-ssri
+  node-stack-utils node-string-decoder node-strip-bom node-strip-json-comments node-supports-color node-tapable node-terser node-text-table node-through node-time-stamp
+  node-to-fast-properties node-tslib node-type-check node-typedarray node-typedarray-to-buffer node-undici node-unicode-canonical-property-names-ecmascript
+  node-unicode-match-property-value-ecmascript node-unicode-property-aliases-ecmascript node-unique-filename node-unset-value node-uri-js node-util-deprecate node-uuid
+  node-v8flags node-validate-npm-package-license node-wcwidth.js node-webpack-sources node-wordwrap node-wrappy node-write-file-atomic node-xtend node-y18n node-yallist
+  node-yaml nodejs x11-common x11-utils x11-xserver-utils xdg-utils zutty
+Use 'sudo apt autoremove' to remove them.
+The following additional packages will be installed:
+  apache2-bin apache2-data apache2-utils libapr1t64 libaprutil1-dbd-sqlite3 libaprutil1-ldap libaprutil1t64 liblua5.4-0 ssl-cert
+Suggested packages:
+  apache2-doc apache2-suexec-pristine | apache2-suexec-custom www-browser
+The following NEW packages will be installed:
+  apache2 apache2-bin apache2-data apache2-utils libapr1t64 libaprutil1-dbd-sqlite3 libaprutil1-ldap libaprutil1t64 liblua5.4-0 ssl-cert
+0 upgraded, 10 newly installed, 0 to remove and 1 not upgraded.
+Need to get 2086 kB of archives.
+After this operation, 8090 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 apache2-bin amd64 2.4.58-1ubuntu8.8 [1331 kB]
+Get:2 https://ubuntu-mirror.snu.edu.in noble-security/main amd64 libapr1t64 amd64 1.7.2-3.1ubuntu0.1 [108 kB]
+Get:3 https://ubuntu-mirror.snu.edu.in noble/main amd64 libaprutil1t64 amd64 1.6.3-1.1ubuntu7 [91.9 kB]
+Get:4 https://ubuntu-mirror.snu.edu.in noble/main amd64 libaprutil1-dbd-sqlite3 amd64 1.6.3-1.1ubuntu7 [11.2 kB]
+Get:5 https://ubuntu-mirror.snu.edu.in noble/main amd64 libaprutil1-ldap amd64 1.6.3-1.1ubuntu7 [9116 B]
+Get:6 https://ubuntu-mirror.snu.edu.in noble/main amd64 liblua5.4-0 amd64 5.4.6-3build2 [166 kB]
+Get:7 https://ubuntu-mirror.snu.edu.in noble/main amd64 ssl-cert all 1.1.2ubuntu1 [17.8 kB]
+Get:8 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 apache2-data all 2.4.58-1ubuntu8.8 [163 kB]
+Get:9 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 apache2-utils amd64 2.4.58-1ubuntu8.8 [97.7 kB]
+Get:10 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 apache2 amd64 2.4.58-1ubuntu8.8 [90.2 kB]
+Fetched 2086 kB in 2s (1372 kB/s)   
+Preconfiguring packages ...
+Selecting previously unselected package libapr1t64:amd64.
+(Reading database ... 130717 files and directories currently installed.)
+Preparing to unpack .../0-libapr1t64_1.7.2-3.1ubuntu0.1_amd64.deb ...
+Unpacking libapr1t64:amd64 (1.7.2-3.1ubuntu0.1) ...
+Selecting previously unselected package libaprutil1t64:amd64.
+Preparing to unpack .../1-libaprutil1t64_1.6.3-1.1ubuntu7_amd64.deb ...
+Unpacking libaprutil1t64:amd64 (1.6.3-1.1ubuntu7) ...
+Selecting previously unselected package libaprutil1-dbd-sqlite3:amd64.
+Preparing to unpack .../2-libaprutil1-dbd-sqlite3_1.6.3-1.1ubuntu7_amd64.deb ...
+Unpacking libaprutil1-dbd-sqlite3:amd64 (1.6.3-1.1ubuntu7) ...
+Selecting previously unselected package libaprutil1-ldap:amd64.
+Preparing to unpack .../3-libaprutil1-ldap_1.6.3-1.1ubuntu7_amd64.deb ...
+Unpacking libaprutil1-ldap:amd64 (1.6.3-1.1ubuntu7) ...
+Selecting previously unselected package liblua5.4-0:amd64.
+Preparing to unpack .../4-liblua5.4-0_5.4.6-3build2_amd64.deb ...
+Unpacking liblua5.4-0:amd64 (5.4.6-3build2) ...
+Selecting previously unselected package apache2-bin.
+Preparing to unpack .../5-apache2-bin_2.4.58-1ubuntu8.8_amd64.deb ...
+Unpacking apache2-bin (2.4.58-1ubuntu8.8) ...
+Selecting previously unselected package apache2-data.
+Preparing to unpack .../6-apache2-data_2.4.58-1ubuntu8.8_all.deb ...
+Unpacking apache2-data (2.4.58-1ubuntu8.8) ...
+Selecting previously unselected package apache2-utils.
+Preparing to unpack .../7-apache2-utils_2.4.58-1ubuntu8.8_amd64.deb ...
+Unpacking apache2-utils (2.4.58-1ubuntu8.8) ...
+Selecting previously unselected package apache2.
+Preparing to unpack .../8-apache2_2.4.58-1ubuntu8.8_amd64.deb ...
+Unpacking apache2 (2.4.58-1ubuntu8.8) ...
+Selecting previously unselected package ssl-cert.
+Preparing to unpack .../9-ssl-cert_1.1.2ubuntu1_all.deb ...
+Unpacking ssl-cert (1.1.2ubuntu1) ...
+Setting up ssl-cert (1.1.2ubuntu1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/ssl-cert.service → /usr/lib/systemd/system/ssl-cert.service.
+Setting up libapr1t64:amd64 (1.7.2-3.1ubuntu0.1) ...
+Setting up liblua5.4-0:amd64 (5.4.6-3build2) ...
+Setting up apache2-data (2.4.58-1ubuntu8.8) ...
+Setting up libaprutil1t64:amd64 (1.6.3-1.1ubuntu7) ...
+Setting up libaprutil1-ldap:amd64 (1.6.3-1.1ubuntu7) ...
+Setting up libaprutil1-dbd-sqlite3:amd64 (1.6.3-1.1ubuntu7) ...
+Setting up apache2-utils (2.4.58-1ubuntu8.8) ...
+Setting up apache2-bin (2.4.58-1ubuntu8.8) ...
+Setting up apache2 (2.4.58-1ubuntu8.8) ...
+Enabling module mpm_event.
+Enabling module authz_core.
+Enabling module authz_host.
+Enabling module authn_core.
+Enabling module auth_basic.
+Enabling module access_compat.
+Enabling module authn_file.
+Enabling module authz_user.
+Enabling module alias.
+Enabling module dir.
+Enabling module autoindex.
+Enabling module env.
+Enabling module mime.
+Enabling module negotiation.
+Enabling module setenvif.
+Enabling module filter.
+Enabling module deflate.
+Enabling module status.
+Enabling module reqtimeout.
+Enabling conf charset.
+Enabling conf localized-error-pages.
+Enabling conf other-vhosts-access-log.
+Enabling conf security.
+Enabling conf serve-cgi-bin.
+Enabling site 000-default.
+Created symlink /etc/systemd/system/multi-user.target.wants/apache2.service → /usr/lib/systemd/system/apache2.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/apache-htcacheclean.service → /usr/lib/systemd/system/apache-htcacheclean.service.
+Processing triggers for ufw (0.36.2-6) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+Processing triggers for libc-bin (2.39-0ubuntu8.6) ...
+Scanning processes...                                                                                                                                                       
+Scanning linux images...                                                                                                                                                    
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+root@srv807475:~# sudo systemctl restart apache2
+root@srv807475:~# cd /var/www/
+root@srv807475:/var/www# ls
+html
+root@srv807475:/var/www# cd html/
+root@srv807475:/var/www/html# ls
+index.html
+root@srv807475:/var/www/html# ls
+index.html
+root@srv807475:/var/www/html# systemctl apache2 status
+Unknown command verb 'apache2', did you mean 'cancel'?
+root@srv807475:/var/www/html# sudo systemctl statusapache2
+Unknown command verb 'statusapache2'.
+root@srv807475:/var/www/html# sudo systemctl status apache2
+● apache2.service - The Apache HTTP Server
+     Loaded: loaded (/usr/lib/systemd/system/apache2.service; enabled; preset: enabled)
+     Active: active (running) since Thu 2025-10-09 08:34:49 UTC; 40min ago
+       Docs: https://httpd.apache.org/docs/2.4/
+    Process: 1950 ExecStart=/usr/sbin/apachectl start (code=exited, status=0/SUCCESS)
+   Main PID: 1953 (apache2)
+      Tasks: 55 (limit: 4652)
+     Memory: 6.0M (peak: 6.2M)
+        CPU: 151ms
+     CGroup: /system.slice/apache2.service
+             ├─1953 /usr/sbin/apache2 -k start
+             ├─1955 /usr/sbin/apache2 -k start
+             └─1956 /usr/sbin/apache2 -k start
+
+Oct 09 08:34:49 srv807475 systemd[1]: Starting apache2.service - The Apache HTTP Server...
+Oct 09 08:34:49 srv807475 systemd[1]: Started apache2.service - The Apache HTTP Server.
+root@srv807475:/var/www/html# sudo systemctl enabled apache2
+Unknown command verb 'enabled', did you mean 'enable'?
+root@srv807475:/var/www/html# sudo systemctl enable apache2
+Synchronizing state of apache2.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+Executing: /usr/lib/systemd/systemd-sysv-install enable apache2
+root@srv807475:/var/www/html# ls
+index.html
+root@srv807475:/var/www/html# wget http://qkcx2j29-80.inc1.devtunnels.ms/dist.zip
+--2025-10-09 09:22:39--  http://qkcx2j29-80.inc1.devtunnels.ms/dist.zip
+Resolving qkcx2j29-80.inc1.devtunnels.ms (qkcx2j29-80.inc1.devtunnels.ms)... 20.207.70.99
+Connecting to qkcx2j29-80.inc1.devtunnels.ms (qkcx2j29-80.inc1.devtunnels.ms)|20.207.70.99|:80... connected.
+HTTP request sent, awaiting response... 308 Permanent Redirect
+Location: https://qkcx2j29-80.inc1.devtunnels.ms/dist.zip [following]
+--2025-10-09 09:22:39--  https://qkcx2j29-80.inc1.devtunnels.ms/dist.zip
+Connecting to qkcx2j29-80.inc1.devtunnels.ms (qkcx2j29-80.inc1.devtunnels.ms)|20.207.70.99|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1620770 (1.5M) [application/x-zip-compressed]
+Saving to: ‘dist.zip’
+
+dist.zip                                   100%[========================================================================================>]   1.54M  --.-KB/s    in 0.08s   
+
+2025-10-09 09:22:39 (19.5 MB/s) - ‘dist.zip’ saved [1620770/1620770]
+
+root@srv807475:/var/www/html# ls
+dist.zip  index.html
+root@srv807475:/var/www/html# apt install unzip
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  gyp handlebars javascript-common libcares2 libdrm-amdgpu1 libdrm-intel1 libegl-mesa0 libegl1 libfile-basedir-perl libfile-desktopentry-perl libfile-mimeinfo-perl
+  libgbm1 libgl1 libgl1-mesa-dri libgles2 libglvnd0 libglx-mesa0 libglx0 libice6 libio-stringy-perl libipc-system-simple-perl libjs-async libjs-events libjs-inherits
+  libjs-is-typedarray libjs-prettify libjs-regenerate libjs-source-map libjs-sprintf-js libjs-typedarray-to-buffer libllvm20 libnet-dbus-perl libpciaccess0 libre2-10
+  libsm6 libssl-dev libtie-ixhash-perl libuv1-dev libvulkan1 libwayland-client0 libwayland-server0 libx11-protocol-perl libx11-xcb1 libxaw7 libxcb-dri3-0 libxcb-glx0
+  libxcb-present0 libxcb-randr0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0 libxcomposite1 libxcursor1 libxfixes3 libxft2 libxi6 libxinerama1 libxkbfile1
+  libxml-parser-perl libxml-twig-perl libxml-xpathengine-perl libxmu6 libxrandr2 libxrender1 libxshmfence1 libxt6t64 libxtst6 libxv1 libxxf86dga1 libxxf86vm1
+  mesa-libgallium mesa-vulkan-drivers node-abbrev node-ampproject-remapping node-ansi-escapes node-ansi-regex node-ansi-styles node-aproba node-are-we-there-yet
+  node-argparse node-arrify node-async node-async-each node-auto-bind node-babel-plugin-add-module-exports node-babel7-runtime node-balanced-match node-base64-js
+  node-binary-extensions node-brace-expansion node-busboy node-camelcase node-caniuse-lite node-chownr node-chrome-trace-event node-ci-info node-cjs-module-lexer
+  node-cli-boxes node-cli-cursor node-clone node-clone-deep node-collection-visit node-color-convert node-color-name node-colors node-commander node-commondir
+  node-concat-stream node-console-control-strings node-convert-source-map node-core-js node-core-js-pure node-core-util-is node-data-uri-to-buffer
+  node-decompress-response node-deep-is node-defaults node-define-property node-delegates node-depd node-diff node-electron-to-chromium node-encoding node-end-of-stream
+  node-err-code node-error-ex node-es-module-lexer node-escape-string-regexp node-eslint-utils node-eslint-visitor-keys node-esquery node-estraverse node-esutils
+  node-events node-fancy-log node-fast-deep-equal node-fast-levenshtein node-fetch node-find-up node-flatted node-for-in node-for-own node-foreground-child
+  node-fs-readdir-recursive node-fs-write-stream-atomic node-fs.realpath node-function-bind node-functional-red-black-tree node-get-caller-file node-get-stream
+  node-get-value node-glob node-globals node-got node-graceful-fs node-growl node-has-flag node-has-unicode node-has-value node-has-values node-hosted-git-info
+  node-iconv-lite node-ieee754 node-iferr node-imurmurhash node-indent-string node-inflight node-inherits node-ini node-interpret node-ip node-ip-regex node-is-arrayish
+  node-is-binary-path node-is-buffer node-is-descriptor node-is-extendable node-is-extglob node-is-path-cwd node-is-plain-obj node-is-plain-object node-is-stream
+  node-is-typedarray node-is-windows node-isarray node-isexe node-isobject node-js-tokens node-jsesc node-json-buffer node-json-parse-better-errors node-json-schema
+  node-json-schema-traverse node-json-stable-stringify node-jsonify node-jsonparse node-kind-of node-levn node-loader-runner node-locate-path node-lodash-packages
+  node-log-driver node-lowercase-keys node-lru-cache node-map-visit node-memfs node-merge-stream node-mimic-response node-minimatch node-minimist node-minipass
+  node-mixin-deep node-mute-stream node-n3 node-negotiator node-neo-async node-npm-run-path node-object-inspect node-object-visit node-once node-optimist node-optionator
+  node-osenv node-p-cancelable node-p-limit node-p-locate node-p-map node-pascalcase node-path-dirname node-path-exists node-path-is-absolute node-path-is-inside
+  node-path-type node-pify node-pkg-dir node-postcss-value-parser node-prelude-ls node-process-nextick-args node-promise-inflight node-promise-retry node-promzard
+  node-prr node-pump node-punycode node-quick-lru node-randombytes node-read node-readable-stream node-rechoir node-regenerate node-regenerate-unicode-properties
+  node-regenerator-runtime node-regenerator-transform node-regexpp node-regjsgen node-repeat-string node-require-directory node-require-from-string node-resolve
+  node-resolve-cwd node-resolve-from node-restore-cursor node-resumer node-retry node-run-queue node-safe-buffer node-sellside-emitter node-serialize-javascript
+  node-set-blocking node-set-immediate-shim node-shebang-command node-shebang-regex node-shell-quote node-signal-exit node-slash node-slice-ansi node-source-list-map
+  node-source-map node-source-map-support node-spdx-correct node-spdx-exceptions node-spdx-expression-parse node-spdx-license-ids node-sprintf-js node-ssri
+  node-stack-utils node-string-decoder node-strip-bom node-strip-json-comments node-supports-color node-tapable node-terser node-text-table node-through node-time-stamp
+  node-to-fast-properties node-tslib node-type-check node-typedarray node-typedarray-to-buffer node-undici node-unicode-canonical-property-names-ecmascript
+  node-unicode-match-property-value-ecmascript node-unicode-property-aliases-ecmascript node-unique-filename node-unset-value node-uri-js node-util-deprecate node-uuid
+  node-v8flags node-validate-npm-package-license node-wcwidth.js node-webpack-sources node-wordwrap node-wrappy node-write-file-atomic node-xtend node-y18n node-yallist
+  node-yaml nodejs x11-common x11-utils x11-xserver-utils xdg-utils zutty
+Use 'apt autoremove' to remove them.
+Suggested packages:
+  zip
+The following NEW packages will be installed:
+  unzip
+0 upgraded, 1 newly installed, 0 to remove and 1 not upgraded.
+Need to get 174 kB of archives.
+After this operation, 384 kB of additional disk space will be used.
+Get:1 https://ubuntu-mirror.snu.edu.in noble-security/main amd64 unzip amd64 6.0-28ubuntu4.1 [174 kB]
+Fetched 174 kB in 0s (354 kB/s)
+Selecting previously unselected package unzip.
+(Reading database ... 131438 files and directories currently installed.)
+Preparing to unpack .../unzip_6.0-28ubuntu4.1_amd64.deb ...
+Unpacking unzip (6.0-28ubuntu4.1) ...
+Setting up unzip (6.0-28ubuntu4.1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+Scanning processes...                                                                                                                                                       
+Scanning linux images...                                                                                                                                                    
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+root@srv807475:/var/www/html# ls
+dist.zip  index.html
+root@srv807475:/var/www/html# unzip dist.zip 
+Archive:  dist.zip
+   creating: dist/
+   creating: dist/.git/
+  inflating: dist/.git/config        
+  inflating: dist/.git/description   
+  inflating: dist/.git/HEAD          
+   creating: dist/.git/hooks/
+  inflating: dist/.git/hooks/applypatch-msg.sample  
+  inflating: dist/.git/hooks/commit-msg.sample  
+  inflating: dist/.git/hooks/fsmonitor-watchman.sample  
+  inflating: dist/.git/hooks/post-update.sample  
+  inflating: dist/.git/hooks/pre-applypatch.sample  
+  inflating: dist/.git/hooks/pre-commit.sample  
+  inflating: dist/.git/hooks/pre-merge-commit.sample  
+  inflating: dist/.git/hooks/pre-push.sample  
+  inflating: dist/.git/hooks/pre-rebase.sample  
+  inflating: dist/.git/hooks/pre-receive.sample  
+  inflating: dist/.git/hooks/prepare-commit-msg.sample  
+  inflating: dist/.git/hooks/push-to-checkout.sample  
+  inflating: dist/.git/hooks/sendemail-validate.sample  
+  inflating: dist/.git/hooks/update.sample  
+   creating: dist/.git/info/
+  inflating: dist/.git/info/exclude  
+   creating: dist/.git/objects/
+   creating: dist/.git/objects/info/
+   creating: dist/.git/objects/pack/
+   creating: dist/.git/refs/
+   creating: dist/.git/refs/heads/
+   creating: dist/.git/refs/tags/
+   creating: dist/assets/
+  inflating: dist/assets/index-BjU2n6pq.js  
+  inflating: dist/assets/index-C39tb3bg.css  
+   creating: dist/icons/
+   creating: dist/icons/android/
+  inflating: dist/icons/android/android-launchericon-144-144.png  
+  inflating: dist/icons/android/android-launchericon-192-192.png  
+  inflating: dist/icons/android/android-launchericon-48-48.png  
+  inflating: dist/icons/android/android-launchericon-512-512.png  
+  inflating: dist/icons/android/android-launchericon-72-72.png  
+  inflating: dist/icons/android/android-launchericon-96-96.png  
+  inflating: dist/icons/icons.json   
+   creating: dist/icons/ios/
+  inflating: dist/icons/ios/100.png  
+  inflating: dist/icons/ios/1024.png  
+  inflating: dist/icons/ios/114.png  
+  inflating: dist/icons/ios/120.png  
+  inflating: dist/icons/ios/128.png  
+  inflating: dist/icons/ios/144.png  
+  inflating: dist/icons/ios/152.png  
+  inflating: dist/icons/ios/16.png   
+  inflating: dist/icons/ios/167.png  
+  inflating: dist/icons/ios/180.png  
+  inflating: dist/icons/ios/192.png  
+  inflating: dist/icons/ios/20.png   
+  inflating: dist/icons/ios/256.png  
+  inflating: dist/icons/ios/29.png   
+  inflating: dist/icons/ios/32.png   
+  inflating: dist/icons/ios/40.png   
+  inflating: dist/icons/ios/50.png   
+  inflating: dist/icons/ios/512.png  
+  inflating: dist/icons/ios/57.png   
+  inflating: dist/icons/ios/58.png   
+  inflating: dist/icons/ios/60.png   
+  inflating: dist/icons/ios/64.png   
+  inflating: dist/icons/ios/72.png   
+  inflating: dist/icons/ios/76.png   
+  inflating: dist/icons/ios/80.png   
+  inflating: dist/icons/ios/87.png   
+   creating: dist/icons/windows11/
+  inflating: dist/icons/windows11/LargeTile.scale-100.png  
+  inflating: dist/icons/windows11/LargeTile.scale-125.png  
+  inflating: dist/icons/windows11/LargeTile.scale-150.png  
+  inflating: dist/icons/windows11/LargeTile.scale-200.png  
+  inflating: dist/icons/windows11/LargeTile.scale-400.png  
+  inflating: dist/icons/windows11/SmallTile.scale-100.png  
+  inflating: dist/icons/windows11/SmallTile.scale-125.png  
+  inflating: dist/icons/windows11/SmallTile.scale-150.png  
+  inflating: dist/icons/windows11/SmallTile.scale-200.png  
+  inflating: dist/icons/windows11/SmallTile.scale-400.png  
+  inflating: dist/icons/windows11/SplashScreen.scale-100.png  
+  inflating: dist/icons/windows11/SplashScreen.scale-125.png  
+  inflating: dist/icons/windows11/SplashScreen.scale-150.png  
+  inflating: dist/icons/windows11/SplashScreen.scale-200.png  
+  inflating: dist/icons/windows11/SplashScreen.scale-400.png  
+  inflating: dist/icons/windows11/Square150x150Logo.scale-100.png  
+  inflating: dist/icons/windows11/Square150x150Logo.scale-125.png  
+  inflating: dist/icons/windows11/Square150x150Logo.scale-150.png  
+  inflating: dist/icons/windows11/Square150x150Logo.scale-200.png  
+  inflating: dist/icons/windows11/Square150x150Logo.scale-400.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-16.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-20.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-24.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-256.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-30.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-32.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-36.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-40.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-44.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-48.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-60.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-64.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-72.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-80.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-lightunplated_targetsize-96.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-16.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-20.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-24.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-256.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-30.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-32.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-36.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-40.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-44.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-48.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-60.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-64.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-72.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-80.png  
+  inflating: dist/icons/windows11/Square44x44Logo.altform-unplated_targetsize-96.png  
+  inflating: dist/icons/windows11/Square44x44Logo.scale-100.png  
+  inflating: dist/icons/windows11/Square44x44Logo.scale-125.png  
+  inflating: dist/icons/windows11/Square44x44Logo.scale-150.png  
+  inflating: dist/icons/windows11/Square44x44Logo.scale-200.png  
+  inflating: dist/icons/windows11/Square44x44Logo.scale-400.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-16.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-20.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-24.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-256.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-30.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-32.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-36.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-40.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-44.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-48.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-60.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-64.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-72.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-80.png  
+  inflating: dist/icons/windows11/Square44x44Logo.targetsize-96.png  
+  inflating: dist/icons/windows11/StoreLogo.scale-100.png  
+  inflating: dist/icons/windows11/StoreLogo.scale-125.png  
+  inflating: dist/icons/windows11/StoreLogo.scale-150.png  
+  inflating: dist/icons/windows11/StoreLogo.scale-200.png  
+  inflating: dist/icons/windows11/StoreLogo.scale-400.png  
+  inflating: dist/icons/windows11/Wide310x150Logo.scale-100.png  
+  inflating: dist/icons/windows11/Wide310x150Logo.scale-125.png  
+  inflating: dist/icons/windows11/Wide310x150Logo.scale-150.png  
+  inflating: dist/icons/windows11/Wide310x150Logo.scale-200.png  
+  inflating: dist/icons/windows11/Wide310x150Logo.scale-400.png  
+  inflating: dist/index.html         
+  inflating: dist/manifest.webmanifest  
+  inflating: dist/registerSW.js      
+   creating: dist/screenshots/
+  inflating: dist/screenshots/desktop-wide.png  
+  inflating: dist/screenshots/mobile-narrow.png  
+  inflating: dist/sw.js              
+  inflating: dist/vite.svg           
+  inflating: dist/workbox-1ea6f077.js  
+root@srv807475:/var/www/html# ls
+dist  dist.zip  index.html
+root@srv807475:/var/www/html# rm index.html 
+root@srv807475:/var/www/html# cd dist/
+root@srv807475:/var/www/html/dist# ls
+assets  icons  index.html  manifest.webmanifest  registerSW.js  screenshots  sw.js  vite.svg  workbox-1ea6f077.js
+root@srv807475:/var/www/html/dist# mv * /var/www/html/
+root@srv807475:/var/www/html/dist# ls
+root@srv807475:/var/www/html/dist# cd ..
+root@srv807475:/var/www/html# ls
+assets  dist  dist.zip  icons  index.html  manifest.webmanifest  registerSW.js  screenshots  sw.js  vite.svg  workbox-1ea6f077.js
+root@srv807475:/var/www/html# cd ..
+root@srv807475:/var/www# ls
+html
+root@srv807475:/var/www# cd html/
+root@srv807475:/var/www/html# ls
+assets  dist  dist.zip  icons  index.html  manifest.webmanifest  registerSW.js  screenshots  sw.js  vite.svg  workbox-1ea6f077.js
+root@srv807475:/var/www/html# cd assets/
+root@srv807475:/var/www/html/assets# ls
+index-BjU2n6pq.js  index-C39tb3bg.css
+root@srv807475:/var/www/html/assets# ^C
+root@srv807475:/var/www/html/assets# 

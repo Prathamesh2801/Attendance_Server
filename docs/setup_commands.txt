@@ -1,0 +1,64 @@
+Executed commands — server setup (chronological)
+# Commands taken from the server session log and short explanations.
+
+1) Backend (PM2)
+cd Attendance_Server
+pm2 start npm --name backend -- start
+# -> Starts the Node app using npm start under PM2 with process name "backend".
+pm2 save
+# -> Saves current PM2 process list so it can be resurrected later.
+
+2) Apache installation and service control
+sudo apt install apache2 -y
+# -> Installs Apache web server.
+sudo systemctl restart apache2
+# -> Restarts Apache service.
+sudo systemctl status apache2
+# -> Shows Apache service status.
+sudo systemctl enable apache2
+# -> Enables Apache to start on boot.
+
+(There was an attempt earlier to enable apache modules before Apache was installed:)
+a2enmod proxy proxy_http rewrite headers
+# -> This command failed earlier because apache2 wasn't installed yet (a2enmod not found).
+
+3) Frontend deployment to Apache document root (/var/www/html)
+cd /var/www/html
+sudo wget -O dist.zip "http://<download-url>/dist.zip"
+# -> Downloads the built frontend artifact (dist.zip). Replace <download-url> with the real URL used.
+sudo apt install unzip -y
+sudo unzip dist.zip
+# -> Extracts the dist.zip (created a 'dist/' folder).
+cd dist
+sudo mv * /var/www/html/
+# -> Moves extracted frontend files (index.html, assets, sw.js, manifest, etc.) into Apache's document root.
+# Optional/observed cleanup:
+sudo rm -f /var/www/html/index.html
+# -> The log showed index.html being removed/replaced before moving dist files.
+
+4) Helpful checks (observed/useful)
+pm2 list
+pm2 status backend
+sudo ss -tulpn | grep LISTEN
+sudo tail -n 200 /var/log/apache2/error.log
+
+5) Recommended follow-ups (not strictly what was in the log, but useful)
+# Set file ownership/permissions for Apache
+sudo chown -R www-data:www-data /var/www/html
+sudo find /var/www/html -type d -exec chmod 755 {} \;
+sudo find /var/www/html -type f -exec chmod 644 {} \;
+
+# Enable Apache modules for reverse proxy (after apache is installed)
+sudo a2enmod proxy proxy_http rewrite headers
+sudo systemctl restart apache2
+
+# (Optional) Configure PM2 to start on boot (run pm2 startup and follow instructions printed)
+pm2 startup systemd
+pm2 save
+
+# (Optional) Install Certbot and get TLS
+sudo apt update
+sudo apt install certbot python3-certbot-apache -y
+sudo certbot --apache -d yourdomain.com -d www.yourdomain.com
+
+-- End of file --
